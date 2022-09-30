@@ -13,7 +13,7 @@ namespace BlogApi.Models
         public int ViewCount {get;set;}
 
 
-        
+        [ForeignKey("Author")]
         public Guid AuthorId { get; set; }
         public User Author {get;set;}
 
@@ -22,9 +22,9 @@ namespace BlogApi.Models
         public Category Category { get; set; }
 
 
-        public ICollection<Tag> Tags {get;set;}
+        public ICollection<ArticleTag> ArticleTags {get;set;}
         public ICollection<Comment> Comments { get; set; }
 
-        public ICollection<User> Likers { get; set; }
+        public ICollection<ArticleLiker> ArticleLikers { get; set; }
     }
 }

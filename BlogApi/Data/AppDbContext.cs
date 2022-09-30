@@ -44,15 +44,9 @@ namespace BlogApi.Data
             .HasForeignKey(a => a.CategoryId)
             .IsRequired().OnDelete(DeleteBehavior.NoAction);
 
-            article.HasMany<Tag>(a => a.Tags)
-            .WithMany(t => t.Articles)
-            .UsingEntity(at => at.ToTable("ArticleTag"));
-
-            article.HasMany<Comment>(a => a.Comments)
+             article.HasMany<Comment>(a => a.Comments)
             .WithOne(c => c.Article)
             .HasForeignKey(c => c.ArticleId);
-
-            article.HasMany<User>(a => a.Likers);
 
             category.ToTable("tbCategory");
 
@@ -65,11 +59,8 @@ namespace BlogApi.Data
                 .HasForeignKey(c => c.CreatedById);
 
             tag.ToTable("TblTag");
-
-            tag.HasMany<Article>(t => t.Articles)
-            .WithMany(a => a.Tags)
-            .UsingEntity(at => at.ToTable("ArticleTag"));
-
+            comment.ToTable("TblComment");
+            
             comment.HasOne<User>(c => c.Author)
             .WithMany(a => a.Comments)
             .HasForeignKey(c => c.AuthorId);
@@ -78,6 +69,18 @@ namespace BlogApi.Data
             .WithMany(a => a.Comments)
             .HasForeignKey(c => c.ArticleId);
             
+            modelBuilder.Entity<ArticleTag>(entity =>{
+                entity.ToTable("tblArticleTag");
+                entity.HasKey(j => new{j.ArticleId, j.TagId});
+                entity.HasOne(at => at.Article).WithMany(j => j.ArticleTags).HasForeignKey(j => j.ArticleId);
+                entity.HasOne(at => at.Tag).WithMany(j => j.ArticleTags).HasForeignKey(j => j.TagId);
+            });
+            modelBuilder.Entity<ArticleLiker>(entity =>{
+                entity.ToTable("tblArticleLiker");
+                entity.HasKey(j => new{j.ArticleId, j.UserId});
+                entity.HasOne(a => a.Article).WithMany(al => al.ArticleLikers).HasForeignKey(al => al.ArticleId);
+                entity.HasOne(u => u.User).WithMany(al => al.ArticleLikers).HasForeignKey(al => al.UserId);
+            });
         }
     }
 }

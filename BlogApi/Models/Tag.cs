@@ -8,6 +8,6 @@ namespace BlogApi.Models
     public class Tag : BaseEnity
     {
         public String Name {get;set;}
-        public ICollection<Article> Articles {get;set;}
+        public ICollection<ArticleTag> ArticleTags {get;set;}
     }
 }
