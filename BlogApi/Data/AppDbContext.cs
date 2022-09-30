@@ -1,6 +1,7 @@
 using BlogApi.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace BlogApi.Data
 {
     public class AppDbContext : DbContext
@@ -11,7 +12,7 @@ namespace BlogApi.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
@@ -44,9 +45,9 @@ namespace BlogApi.Data
             .HasForeignKey(a => a.CategoryId)
             .IsRequired().OnDelete(DeleteBehavior.NoAction);
 
-             article.HasMany<Comment>(a => a.Comments)
-            .WithOne(c => c.Article)
-            .HasForeignKey(c => c.ArticleId);
+            article.HasMany<Comment>(a => a.Comments)
+           .WithOne(c => c.Article)
+           .HasForeignKey(c => c.ArticleId);
 
             category.ToTable("tbCategory");
 
@@ -60,7 +61,7 @@ namespace BlogApi.Data
 
             tag.ToTable("TblTag");
             comment.ToTable("TblComment");
-            
+
             comment.HasOne<User>(c => c.Author)
             .WithMany(a => a.Comments)
             .HasForeignKey(c => c.AuthorId);
@@ -68,16 +69,18 @@ namespace BlogApi.Data
             comment.HasOne<Article>(c => c.Article)
             .WithMany(a => a.Comments)
             .HasForeignKey(c => c.ArticleId);
-            
-            modelBuilder.Entity<ArticleTag>(entity =>{
+
+            modelBuilder.Entity<ArticleTag>(entity =>
+            {
                 entity.ToTable("tblArticleTag");
-                entity.HasKey(j => new{j.ArticleId, j.TagId});
+                entity.HasKey(j => new { j.ArticleId, j.TagId });
                 entity.HasOne(at => at.Article).WithMany(j => j.ArticleTags).HasForeignKey(j => j.ArticleId);
                 entity.HasOne(at => at.Tag).WithMany(j => j.ArticleTags).HasForeignKey(j => j.TagId);
             });
-            modelBuilder.Entity<ArticleLiker>(entity =>{
+            modelBuilder.Entity<ArticleLiker>(entity =>
+            {
                 entity.ToTable("tblArticleLiker");
-                entity.HasKey(j => new{j.ArticleId, j.UserId});
+                entity.HasKey(j => new { j.ArticleId, j.UserId });
                 entity.HasOne(a => a.Article).WithMany(al => al.ArticleLikers).HasForeignKey(al => al.ArticleId);
                 entity.HasOne(u => u.User).WithMany(al => al.ArticleLikers).HasForeignKey(al => al.UserId);
             });
