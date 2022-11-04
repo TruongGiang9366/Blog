@@ -1,14 +1,16 @@
-# Blog
-Lập Trình Web Nâng Cao - Blog
-Vào cmd gõ
---cài dotnet ef
-$ dotnet tool install --global dotnet-ef
-----
-nếu chưa có thì dùng lệnh này trước dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
-----
-sau đó gõ $ dotnet ef migrations add InitDb
+Lập trình wed
 
+Nhóm Trung Giang
 
---chạy
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-dotnet run
+Thành viên:
+
+Trần Phan Quốc Trung (Leader)
+Nguyễn Trường Giang
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Công việc:
+
+Giang làm (Frontend) tạo giao diện và làm các chức năng thêm, sửa, xóa của user, article, comment
+Trung làm (Backend) tạo project và quản lí poject bằng GitHub, thiết kế Database và tạo các phương thức Get, Post, Put, Delete (Rest API)
